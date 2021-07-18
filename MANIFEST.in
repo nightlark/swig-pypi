@@ -1,0 +1,7 @@
+include CMakeLists.txt
+include README.md
+include LICENSE-SWIG
+include LICENSE-GPL
+include LICENSE-UNIVERSITIES
+
+recursive-exclude _skbuild *

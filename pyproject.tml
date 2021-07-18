@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "scikit-build"]
+build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+before-all = [
+    "pipx install cmake==3.21.0",
+    "cmake --version",
+    "pipx install ninja==1.10.0.post3",
+    "ninja --version",
+]
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux1"
+manylinux-i686-image = "manylinux1"
+
