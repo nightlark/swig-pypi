@@ -62,7 +62,7 @@ if(NOT BISON_FOUND)
   set(BISON_INSTALL_DIR ${CMAKE_BINARY_DIR}/BISON-bin-install)
   set(BISON_BINARY_DIST_DIR ${CMAKE_BINARY_DIR}/BISON-bin-dist)
   set(BISON_BINARY_DIST_ARCH_DIR ${CMAKE_BINARY_DIR}/BISON-bin-dist-arch)
-  if(WIN32 AND MSVC AND NOT MINGW AND NOT MSYS)
+  if(WIN32)
     # Easiest to just download a precompiled binary
 #    ExternalProject_add(BISON-bin
 #      SOURCE_DIR ${BISON_SOURCE_DIR}
