@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0 # just in case versioneer gets used in the future
 
       - name: Build wheels
-        uses: pypa/cibuildwheels@v2.0.0
+        uses: pypa/cibuildwheel@v2.0.0
 
       - uses: actions/upload-artifact@v2
         with:
