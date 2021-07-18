@@ -2,7 +2,7 @@
 
 import os
 import sys
-import distutils.text_file import TextFile
+from distutils.text_file import TextFile
 from skbuild import setup
 
 with open('README.md', 'r') as fp:
