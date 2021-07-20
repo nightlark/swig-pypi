@@ -8,13 +8,27 @@ from skbuild import setup
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import versioneer
 
+from wheel.bdist_wheel import bdist_wheel as genericpy_bdist_wheel
+class bdist_wheel(genericpy_bdist_wheel):
+    def finalize_options(self):
+        _bdist_wheel.finalize_options(self)
+        self.root_is_pure = False
+    def get_tag(self):
+        python, abi, plat = _bdist_wheel.get_tag(self)
+        python, abi = 'py2.py3', 'none'
+        return python, abi, plat
+
 with open('README.md', 'r') as fp:
     readme = fp.read()
+
+cmdclass = {"bdist_wheel": genericpy_bdist_wheel}
+for k, v in versioneer.get_cmdclass().items():
+    cmdclass[k] = v
 
 setup(
     name='swig',
     version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    cmdclass=cmdclass,
     package_dir={'': 'src'},
     packages=['swig'],
     cmake_install_dir='src/swig/data',
