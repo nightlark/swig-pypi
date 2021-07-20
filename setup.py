@@ -8,8 +8,8 @@ from skbuild import setup
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import versioneer
 
-from wheel.bdist_wheel import bdist_wheel as genericpy_bdist_wheel
-class bdist_wheel(genericpy_bdist_wheel):
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
+class genericpy_bdist_wheel(_bdist_wheel):
     def finalize_options(self):
         _bdist_wheel.finalize_options(self)
         self.root_is_pure = False
