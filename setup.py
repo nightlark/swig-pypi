@@ -33,8 +33,8 @@ setup(
     long_description_content_type='text/markdown',
 
     classifiers=[
-        'OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
-        'Other/Proprietary License',
+        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
+        'License :: Other/Proprietary License',
         'Programming Language :: C',
         'Programming Language :: C++',
         'Programming Language :: Python',
