@@ -5,11 +5,16 @@ import sys
 from distutils.text_file import TextFile
 from skbuild import setup
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import versioneer
+
 with open('README.md', 'r') as fp:
     readme = fp.read()
 
 setup(
     name='swig',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     package_dir={'': 'src'},
     packages=['swig'],
     cmake_install_dir='src/swig/data',
