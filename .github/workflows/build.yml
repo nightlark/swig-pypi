@@ -54,6 +54,23 @@ jobs:
 
       - run: pipx run twine check --strict dist/*
 
+  upload_test_pypi:
+    name: Upload to Test PyPI
+    needs: [build_wheels, build_sdist, check_dist]
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'main')
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: dist
+
+      - name: Upload to Test PyPI
+        uses: pypa/gh-action-pypi-publish@v1.4.2
+        with:
+          password: ${{ secrets.TEST_PYPI_PASSWORD }}
+          repository_url: https://test.pypi.org/legacy/
+
   upload_pypi:
     name: Upload to PyPI
     needs: [build_wheels, build_sdist, check_dist]
