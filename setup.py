@@ -3,12 +3,13 @@
 import os
 import sys
 from distutils.text_file import TextFile
+from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 from skbuild import setup
 
+# may be needed in some cases for versioneer to get version correctly during builds
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-import versioneer
+import versioneer # noqa: E402
 
-from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 class genericpy_bdist_wheel(_bdist_wheel):
     def finalize_options(self):
         _bdist_wheel.finalize_options(self)
