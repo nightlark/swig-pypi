@@ -53,6 +53,6 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Build Tools",
     ],
-    license="pick a license",
+    license="https://github.com/swig/swig/blob/master/LICENSE",
     keywords="swig build c c++",
 )
