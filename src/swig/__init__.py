@@ -3,6 +3,9 @@ import platform
 import subprocess
 import sys
 import glob
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
 
 DATA = os.path.join(os.path.dirname(__file__), 'data')
 
@@ -19,8 +22,3 @@ def _program(name, args):
 
 def swig():
     raise SystemExit(_program('swig', sys.argv[1:]))
-
-
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
