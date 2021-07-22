@@ -14,4 +14,3 @@ before-all = [
 [tool.cibuildwheel.linux]
 manylinux-x86_64-image = "manylinux1"
 manylinux-i686-image = "manylinux1"
-

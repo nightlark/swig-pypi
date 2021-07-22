@@ -1,7 +1,7 @@
 SWIG PyPI
 =========
 
-[SWIG Homepage](http://www.swig.org/) 
+[SWIG Homepage](http://www.swig.org/)
 
 [SWIG Source Code](https://github.com/swig/swig/)
 
