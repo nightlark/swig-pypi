@@ -61,7 +61,7 @@ jobs:
     name: Upload to Test PyPI
     needs: [build_wheels, build_sdist, check_dist]
     runs-on: ubuntu-latest
-    if: endsWith(github.ref, 'main') && github.repository == 'nightlark/swig-pipy'
+    if: endsWith(github.ref, 'main') && github.repository == 'nightlark/swig-pypi'
     steps:
       - uses: actions/download-artifact@v2
         with:
@@ -78,7 +78,7 @@ jobs:
     name: Upload to PyPI
     needs: [build_wheels, build_sdist, check_dist]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.repository == 'nightlark/swig-pipy' && startsWith(github.ref, 'refs/tags/')
+    if: github.event_name == 'push' && github.repository == 'nightlark/swig-pypi' && startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/download-artifact@v2
         with:
