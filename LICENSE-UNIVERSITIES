@@ -1,6 +1,6 @@
 SWIG is distributed under the following terms:
 
-I.  
+I.
 
 Copyright (c) 1995-1998
 The University of Utah and the Regents of the University of California
@@ -8,7 +8,7 @@ All Rights Reserved
 
 Permission is hereby granted, without written agreement and without
 license or royalty fees, to use, copy, modify, and distribute this
-software and its documentation for any purpose, provided that 
+software and its documentation for any purpose, provided that
 (1) The above copyright notice and the following two paragraphs
 appear in all copies of the source code and (2) redistributions
 including binaries reproduces these notices in the supporting
@@ -17,7 +17,7 @@ copyrighted by their authors and need not follow the licensing terms
 described here, provided that the new terms are clearly indicated in
 all files where they apply.
 
-IN NO EVENT SHALL THE AUTHOR, THE UNIVERSITY OF CALIFORNIA, THE 
+IN NO EVENT SHALL THE AUTHOR, THE UNIVERSITY OF CALIFORNIA, THE
 UNIVERSITY OF UTAH OR DISTRIBUTORS OF THIS SOFTWARE BE LIABLE TO ANY
 PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION,
@@ -25,14 +25,14 @@ EVEN IF THE AUTHORS OR ANY OF THE ABOVE PARTIES HAVE BEEN ADVISED OF
 THE POSSIBILITY OF SUCH DAMAGE.
 
 THE AUTHOR, THE UNIVERSITY OF CALIFORNIA, AND THE UNIVERSITY OF UTAH
-SPECIFICALLY DISCLAIM ANY WARRANTIES,INCLUDING, BUT NOT LIMITED TO, 
+SPECIFICALLY DISCLAIM ANY WARRANTIES,INCLUDING, BUT NOT LIMITED TO,
 THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND 
+PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND
 THE AUTHORS AND DISTRIBUTORS HAVE NO OBLIGATION TO PROVIDE MAINTENANCE,
 SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
 
-II. 
+II.
 
 This software includes contributions that are Copyright (c) 1998-2005
 University of Chicago.
@@ -64,7 +64,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-III.  
+III.
 
 This software includes contributions that are Copyright (c) 2005-2006
 Arizona Board of Regents (University of Arizona).
@@ -72,7 +72,7 @@ All Rights Reserved
 
 Permission is hereby granted, without written agreement and without
 license or royalty fees, to use, copy, modify, and distribute this
-software and its documentation for any purpose, provided that 
+software and its documentation for any purpose, provided that
 (1) The above copyright notice and the following paragraph
 appear in all copies of the source code and (2) redistributions
 including binaries reproduces these notices in the supporting
@@ -92,4 +92,3 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
