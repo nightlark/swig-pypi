@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import os
 import sys
 from distutils.text_file import TextFile
