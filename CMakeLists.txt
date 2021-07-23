@@ -15,6 +15,11 @@ enable_language(CXX)
 include(ExternalProject)
 
 set(_swig_cache_args)
+set(_swig_build_flags)
+
+if(WIN32)
+  set(_swig_build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
+endif()
 
 function(tmp_ExternalProject_add_Empty prj deps)
   set(deps_args)
@@ -53,6 +58,7 @@ list(APPEND _swig_cache_args
   -DPCRE_LIBRARY:FILEPATH=${PCRE_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}pcre${CMAKE_STATIC_LIBRARY_SUFFIX}
   -DPCRE_INCLUDE_DIR:PATH=${PCRE_INSTALL_DIR}/include
   )
+set(_swig_build_flags "${_swig_build_flags} -DPCRE_STATIC")
 
 # Bison
 find_package(BISON)
@@ -116,8 +122,8 @@ ExternalProject_add(SWIG
   CMAKE_CACHE_ARGS
     -DBUILD_TESTING:BOOL=OFF
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-    -DCMAKE_C_FLAGS:STRING=-DPCRE_STATIC
-    -DCMAKE_CXX_FLAGS:STRING=-DPCRE_STATIC
+    "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
+    "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
     ${_swig_cache_args}
   INSTALL_COMMAND ""
   DEPENDS
