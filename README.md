@@ -25,6 +25,6 @@ Building from the source dist package requires internet access in order to downl
 License
 =======
 
-This project is covered by the `pick a license`.
+This project is covered by the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
 SWIG is distributed under the [GNU General Public License v3 or later](https://github.com/swig/swig/blob/master/LICENSE) with portions under the file [LICENSE-UNIVERSITIES](https://github.com/swig/swig/blob/master/LICENSE-UNIVERSITIES). For more information about SWIG, visit [http://www.swig.org](http://www.swig.org/)
