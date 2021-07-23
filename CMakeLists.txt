@@ -18,7 +18,7 @@ set(_swig_cache_args)
 set(_swig_build_flags)
 
 if(WIN32)
-list(APPEND _swig_build_flags -static -static-libgcc -static-libstdc++)
+set(_swig-build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
 endif()
 
 function(tmp_ExternalProject_add_Empty prj deps)
@@ -58,7 +58,7 @@ list(APPEND _swig_cache_args
   -DPCRE_LIBRARY:FILEPATH=${PCRE_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}pcre${CMAKE_STATIC_LIBRARY_SUFFIX}
   -DPCRE_INCLUDE_DIR:PATH=${PCRE_INSTALL_DIR}/include
   )
-list(APPEND _swig_build_flags -DPCRE_STATIC)
+set(_swig-build_flags "${_swig_build_flags} -DPCRE_STATIC")
 
 # Bison
 find_package(BISON)
@@ -121,9 +121,9 @@ ExternalProject_add(SWIG
   URL "https://github.com/swig/swig/archive/master.tar.gz"
   CMAKE_CACHE_ARGS
     -DBUILD_TESTING:BOOL=OFF
-    "-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}"
-    "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
-    "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
+    -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+    -DCMAKE_C_FLAGS:STRING="${_swig_build_flags}"
+    -DCMAKE_CXX_FLAGS:STRING="${_swig_build_flags}"
     ${_swig_cache_args}
   INSTALL_COMMAND ""
   DEPENDS
