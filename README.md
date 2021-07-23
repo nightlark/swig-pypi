@@ -1,11 +1,13 @@
 SWIG PyPI
 =========
 
+[SWIG PyPI Homepage](https://github.com/nightlark/swig-pypi)
+
 [SWIG Homepage](http://www.swig.org/)
 
 [SWIG Source Code](https://github.com/swig/swig/)
 
-Package license: GPL-3.0-or-later
+[SWIG License](LICENSE-SWIG): GPL-3.0-or-later with portions under [LICENSE-UNIVERSITIES](LICENSE-UNIVERSITIES) (see [LICENSE-SWIG](LICENSE-SWIG) for details)
 
 Installing SWIG
 ===============
