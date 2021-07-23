@@ -122,8 +122,8 @@ ExternalProject_add(SWIG
   CMAKE_CACHE_ARGS
     -DBUILD_TESTING:BOOL=OFF
     -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-    -DCMAKE_C_FLAGS:STRING="${_swig_build_flags}"
-    -DCMAKE_CXX_FLAGS:STRING="${_swig_build_flags}"
+    "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
+    "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
     ${_swig_cache_args}
   INSTALL_COMMAND ""
   DEPENDS
