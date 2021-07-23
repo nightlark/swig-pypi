@@ -11,7 +11,7 @@ del get_versions
 DATA = os.path.join(os.path.dirname(__file__), "data")
 
 BIN_DIR = os.path.join(DATA, "bin")
-SWIG_SHARE_DIR = os.path.join(DATA, "share/swig")
+SWIG_SHARE_DIR = os.path.join(DATA, "share" + os.path.sep + "swig")
 
 # should only be one swig_lib version in the data subfolder
 # make nicer if swig adds support for custom SWIG_LIB paths or relative swig_lib paths
