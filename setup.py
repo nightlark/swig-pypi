@@ -37,6 +37,10 @@ setup(
     entry_points={"console_scripts": ["swig=swig:swig"]},
     url="http://www.swig.org/",
     download_url="http://www.swig.org/download.html",
+    project_urls={
+        "Source Code": "https://github.com/nightlark/swig-pypi",
+        "Bug Tracker": "https://github.com/nightlark/swig-pypi/issues",
+    },
     description="SWIG is a software development tool that connects "
     "programs written in C and C++ with a variety of "
     "high-level programming languages.",
