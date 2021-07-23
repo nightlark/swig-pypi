@@ -18,7 +18,7 @@ set(_swig_cache_args)
 set(_swig_build_flags)
 
 if(WIN32)
-set(_swig-build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
+  set(_swig-build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
 endif()
 
 function(tmp_ExternalProject_add_Empty prj deps)
