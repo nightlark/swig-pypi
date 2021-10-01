@@ -17,7 +17,7 @@ jobs:
         run: date +%s > report.txt
 
       - name: Create Pull Request
-        uses: rbSparky/swig-pypi@main
+        uses: rbSparky/swig-pypi@testing
         with:
           branch: main
           token: ${{ secrets.GITHUB_TOKEN }}
