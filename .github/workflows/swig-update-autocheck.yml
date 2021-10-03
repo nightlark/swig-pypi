@@ -45,3 +45,4 @@ jobs:
               - Swig version update
   
               Auto-generated 
+            branch: swig-update
