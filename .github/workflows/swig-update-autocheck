@@ -1,0 +1,44 @@
+name: Update Swig Dependencies
+on:
+  schedule:
+    - cron:  '0 10 * * 1'
+jobs:
+  update-dep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Update dependencies
+        run: |
+          index=0
+          while read -r line
+          do
+            old_version[index++]="$(echo $line | grep -Po '\d+(\.\d+)+')"
+          done < swig_version.cmake
+          echo "Old version: $old_version"
+
+          new_version=$(git -c 'versionsort.suffix=-' \
+            ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/swig/swig/ 'v*.*.*'\
+            | tail --lines=1\
+            | cut --delimiter='/' --fields=3\
+            | grep -Po '\d+(\.\d+)+')
+
+          echo "New version: $new_version"
+
+          if [ $old_version != $new_version ]; then
+            $(echo "set(SWIG_VERSION $new_version)" > swig_version.cmake)
+            echo "swig version updated"
+          else
+            echo "No change in swig version"
+          fi
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            commit-message: Update swig dependencies
+            title: Update swig version
+            body: |
+              - Swig version update
+  
+              Auto-generated 
