@@ -28,7 +28,7 @@ jobs:
 
           echo "New version: $new_version"
 
-          if [ $old_version != $new_version ]; then
+          if [ "$old_version" != "$new_version" ]; then
             $(echo "set(SWIG_VERSION $new_version)" > swig_version.cmake)
             echo "swig version updated"
           else
