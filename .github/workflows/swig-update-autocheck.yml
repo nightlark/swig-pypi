@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Update dependencies
+      - name: Check and update SWIG version
         run: |
           index=0
           while read -r line
