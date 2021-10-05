@@ -13,7 +13,7 @@ jobs:
       
       - name: Check and update SWIG version
         run: |
-           old_version="$(grep -Po '(?<=SWIG_VERSION )\d+(\.\d+)+' swig_version.cmake)"
+          old_version="$(grep -Po '(?<=SWIG_VERSION )\d+(\.\d+)+' swig_version.cmake)"
           echo "Old version: $old_version"
 
           new_version=$(git -c 'versionsort.suffix=-' \
