@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+  
       - name: Check and update SWIG version
+        id: check-swig
         run: |
           old_version="$(grep -Po '(?<=SWIG_VERSION )\d+(\.\d+)+' swig_version.cmake)"
           echo "Old version: $old_version"
@@ -23,6 +24,7 @@ jobs:
             | grep -Po '\d+(\.\d+)+')
 
           echo "New version: $new_version"
+          echo "::set-output name=ech_new_version::$new_version"
 
           if [ "$old_version" != "$new_version" ]; then
             echo "set(SWIG_VERSION $new_version)" > swig_version.cmake
@@ -36,7 +38,8 @@ jobs:
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
             commit-message: Update swig dependencies
-            title: Update swig version
+            title: Update swig version ${{ steps.check-swig.outputs.ech_new_version }}
+
             body: |
               - Swig version update
   
