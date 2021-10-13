@@ -6,7 +6,7 @@ from skbuild import setup
 
 # may be needed in some cases for versioneer to get version correctly during builds
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-import versioneer  # noqa: E402
+from setuptools_scm import get_version
 
 
 class genericpy_bdist_wheel(_bdist_wheel):
@@ -29,7 +29,7 @@ for k, v in versioneer.get_cmdclass().items():
 
 setup(
     name="swig",
-    version=versioneer.get_version(),
+    version=get_version(),
     cmdclass=cmdclass,
     package_dir={"": "src"},
     packages=["swig"],
