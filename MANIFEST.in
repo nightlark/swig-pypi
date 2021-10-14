@@ -6,5 +6,4 @@ include LICENSE-UNIVERSITIES
 
 recursive-exclude _skbuild *
 
-include versioneer.py
 include src/swig/_version.py
