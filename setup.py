@@ -24,12 +24,9 @@ with open("README.md", "r") as fp:
     readme = fp.read()
 
 cmdclass = {"bdist_wheel": genericpy_bdist_wheel}
-for k, v in versioneer.get_cmdclass().items():
-    cmdclass[k] = v
 
 setup(
     name="swig",
-    version=get_version(),
     cmdclass=cmdclass,
     package_dir={"": "src"},
     packages=["swig"],
