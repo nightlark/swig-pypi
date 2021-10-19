@@ -29,26 +29,26 @@ jobs:
             arch: "aarch64"
             build: "manylinux_"
             use_qemu: true
-            #- os: ubuntu-20.04
-            #arch: "aarch64"
-            #build: "musllinux_"
-            #use_qemu: true
+          - os: ubuntu-20.04
+            arch: "aarch64"
+            build: "musllinux_"
+            use_qemu: true
           - os: ubuntu-20.04
             arch: "ppc64le"
             build: "manylinux_"
             use_qemu: true
-            #- os: ubuntu-20.04
-            #arch: "ppc64le"
-            #build: "musllinux_"
-            #use_qemu: true
+          - os: ubuntu-20.04
+            arch: "ppc64le"
+            build: "musllinux_"
+            use_qemu: true
           - os: ubuntu-20.04
             arch: "s390x"
             build: "manylinux_"
             use_qemu: true
-            #- os: ubuntu-20.04
-            #arch: "s390x"
-            #build: "musllinux_"
-            #use_qemu: true
+          - os: ubuntu-20.04
+            arch: "s390x"
+            build: "musllinux_"
+            use_qemu: true
           - os: windows-2019
             arch: "AMD64"
             build: ""
