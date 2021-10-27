@@ -75,6 +75,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.0.0
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
+          CIBW_BUILD: "cp39-${{ matrix.build }}*"
 
       - uses: actions/upload-artifact@v2
         with:
