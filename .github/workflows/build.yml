@@ -73,10 +73,11 @@ jobs:
         
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.2.2
+        if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
           CIBW_BUILD: "cp39-${{ matrix.build }}*"
-
+     
       - uses: actions/upload-artifact@v2
         with:
           path: ./wheelhouse/*.whl
