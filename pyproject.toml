@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [tool.cibuildwheel]
 build = "cp39-*"
 before-all = [
-    "pipx install cmake==3.21.0",
+    "pipx install -f cmake==3.21.4",
     "cmake --version",
-    "pipx install ninja==1.10.0.post3",
+    "pipx install -f ninja==1.10.2.2",
     "ninja --version",
 ]
 
