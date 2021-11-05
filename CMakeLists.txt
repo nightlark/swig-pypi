@@ -19,6 +19,7 @@ include(swig_version.cmake)
 set(_swig_cache_args)
 set(_swig_build_flags)
 
+set(PCRE_GENERATOR ${CMAKE_GENERATOR})
 if(WIN32)
   set(_swig_build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
   # SWIG versions before 4.1.0 don't have CMake -- "easiest" to build using MSYS2
@@ -34,7 +35,7 @@ if(WIN32)
     set(MINGW_CC "-DCMAKE_C_COMPILER:FILEPATH=${MINGW_BASE_PATH}/bin/gcc.exe")
     set(MINGW_CXX "-DCMAKE_CXX_COMPILER:FILEPATH=${MINGW_BASE_PATH}/bin/g++.exe")
     set(WIN_MSYS_HERE "-here")
-    set(CMAKE_GENERATOR "MinGW Makefiles")
+    set(PCRE_GENERATOR "MinGW Makefiles")
   endif()
 endif()
 
@@ -66,13 +67,13 @@ ExternalProject_add(PCRE
   URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
   URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
   CMAKE_GENERATOR
-    "${CMAKE_GENERATOR}"
+    "${PCRE_GENERATOR}"
   CMAKE_CACHE_ARGS
+    ${MINGW_CC}
+    ${MINGW_CXX}
     -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
     -DCMAKE_INSTALL_PREFIX:PATH=${PCRE_INSTALL_DIR}
     -DCMAKE_INSTALL_LIBDIR:STRING=lib
-    "${MINGW_CC}"
-    "${MINGW_CXX}"
   INSTALL_DIR ${PCRE_INSTALL_DIR}
   )
 list(APPEND _swig_cache_args
