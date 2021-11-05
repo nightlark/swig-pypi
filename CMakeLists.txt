@@ -48,7 +48,7 @@ set(PCRE_INSTALL_DIR ${CMAKE_BINARY_DIR}/PCRE-install)
 ExternalProject_add(PCRE
   SOURCE_DIR ${PCRE_SOURCE_DIR}
   BINARY_DIR ${PCRE_BINARY_DIR}
-  URL "https://ftp.pcre.org/pub/pcre/pcre-8.45.tar.gz"
+  URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
   URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
   CMAKE_CACHE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
@@ -137,15 +137,23 @@ if(SWIG_VERSION VERSION_GREATER_EQUAL 4.1.0)
     )
   install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
 else()
-  message(FATAL_ERROR "SWIG_VERSION less than 4.1.0 can't be built; does not include CMake build system")
-#    ExternalProject_add(SWIG
-#    SOURCE_DIR ${SWIG_SOURCE_DIR}
-#    BINARY_DIR ${SWIG_BINARY_DIR}
-#    URL "https://github.com/swig/swig/archive/refs/tags/v${SWIG_VERSION}.tar.gz"
-#    INSTALL_COMMAND ""
-#    DEPENDS
-#      PCRE
-#      BISON-bin
-#    )
+  find_program(MAKE_EXE
+    NAMES gmake mingw32-make mingw64-make make
+    NAMES_PER_DIR
+    REQUIRED
+  )
+  set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
+  ExternalProject_add(SWIG
+    SOURCE_DIR ${SWIG_SOURCE_DIR}
+    URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${SWIG_SOURCE_DIR}/configure --prefix=
+    BUILD_COMMAND ${MAKE_EXE} CC=gcc CXX=g++
+    INSTALL_COMMAND ${MAKE_EXE} install DESTDIR=${SWIG_BINARY_DIR}
+    DEPENDS
+      PCRE
+      BISON-bin
+    )
+  install(FILES ${SWIG_BINARY_DIR}/bin/ DESTINATION bin)
+  install(FILES ${SWIG_BINARY_DIR}/share/ DESTINATION share)
 endif()
 
