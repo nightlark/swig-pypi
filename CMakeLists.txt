@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.8)
 
 project(SwigPythonDistributions NONE)
 
@@ -13,6 +13,8 @@ endif()
 
 enable_language(CXX)
 include(ExternalProject)
+
+include(swig_version.cmake)
 
 set(_swig_cache_args)
 set(_swig_build_flags)
@@ -115,20 +117,35 @@ endif()
 # SWIG
 set(SWIG_SOURCE_DIR ${CMAKE_BINARY_DIR}/SWIG-src)
 set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-build)
-ExternalProject_add(SWIG
-  SOURCE_DIR ${SWIG_SOURCE_DIR}
-  BINARY_DIR ${SWIG_BINARY_DIR}
-  URL "https://github.com/swig/swig/archive/master.tar.gz"
-  CMAKE_CACHE_ARGS
-    -DBUILD_TESTING:BOOL=OFF
-    -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-    "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
-    "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
-    ${_swig_cache_args}
-  INSTALL_COMMAND ""
-  DEPENDS
-    PCRE
-    BISON-bin
-  )
 
-install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
+if(SWIG_VERSION VERSION_GREATER_EQUAL 4.1.0)
+  ExternalProject_add(SWIG
+    SOURCE_DIR ${SWIG_SOURCE_DIR}
+    BINARY_DIR ${SWIG_BINARY_DIR}
+    URL "https://github.com/swig/swig/archive/refs/tags/v${SWIG_VERSION}.tar.gz"
+    #URL "https://github.com/swig/swig/archive/master.tar.gz"
+    CMAKE_CACHE_ARGS
+      -DBUILD_TESTING:BOOL=OFF
+      -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+      "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
+      "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
+      ${_swig_cache_args}
+    INSTALL_COMMAND ""
+    DEPENDS
+      PCRE
+      BISON-bin
+    )
+  install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
+else()
+  message(FATAL_ERROR "SWIG_VERSION less than 4.1.0 can't be built; does not include CMake build system")
+#    ExternalProject_add(SWIG
+#    SOURCE_DIR ${SWIG_SOURCE_DIR}
+#    BINARY_DIR ${SWIG_BINARY_DIR}
+#    URL "https://github.com/swig/swig/archive/refs/tags/v${SWIG_VERSION}.tar.gz"
+#    INSTALL_COMMAND ""
+#    DEPENDS
+#      PCRE
+#      BISON-bin
+#    )
+endif()
+
