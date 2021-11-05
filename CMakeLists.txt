@@ -159,8 +159,8 @@ else()
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MINGW_CC} ${MINGW_CXX} ${SWIG_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE}
-    INSTALL_COMMAND ${MAKE_EXE} install DESTDIR=${SWIG_BINARY_DIR}
+    BUILD_COMMAND ${MAKE_EXE} -j
+    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${SWIG_BINARY_DIR}
     DEPENDS
       PCRE
       BISON-bin
