@@ -137,21 +137,30 @@ if(SWIG_VERSION VERSION_GREATER_EQUAL 4.1.0)
     )
   install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
 else()
+  # Need to find a copy of make; mostly an issue on Windows
   find_program(MAKE_EXE
     NAMES gmake mingw32-make mingw64-make make
     NAMES_PER_DIR
     REQUIRED
   )
+  # Make sure the gcc and g++ compilers in MinGW are used
   if(WIN32)
     find_package(MSYS REQUIRED)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw64")
+    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw32")
+    endif()
+    set(MINGW_CC "CC=${MINGW_BASE_PATH}/bin/gcc.exe")
+    set(MINGW_CXX "CXX=${MINGW_BASE_PATH}/bin/g++.exe")
   endif()
   set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYS_CMD} ${SWIG_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MSYS_CMD} ${MAKE_EXE} CC=gcc CXX=g++
-    INSTALL_COMMAND ${MSYS_CMD} ${MAKE_EXE} install DESTDIR=${SWIG_BINARY_DIR}
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MINGW_CC} ${MINGW_CXX} ${SWIG_SOURCE_DIR}/configure --prefix=
+    BUILD_COMMAND ${MAKE_EXE}
+    INSTALL_COMMAND ${MAKE_EXE} install DESTDIR=${SWIG_BINARY_DIR}
     DEPENDS
       PCRE
       BISON-bin
