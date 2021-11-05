@@ -31,8 +31,8 @@ if(WIN32)
       set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw32")
       set(MSYSTEM "MSYSTEM=MINGW32")
     endif()
-    set(MINGW_CC "-DCMAKE_C_COMPILER:PATH=${MINGW_BASE_PATH}/bin/gcc.exe")
-    set(MINGW_CXX "-DCMAKE_CXX_COMPILER:PATH=${MINGW_BASE_PATH}/bin/g++.exe")
+    set(MINGW_CC "-DCMAKE_C_COMPILER:FILEPATH=${MINGW_BASE_PATH}/bin/gcc.exe")
+    set(MINGW_CXX "-DCMAKE_CXX_COMPILER:FILEPATH=${MINGW_BASE_PATH}/bin/g++.exe")
     set(WIN_MSYS_HERE "-here")
     set(CMAKE_GENERATOR "MinGW Makefiles")
   endif()
@@ -66,13 +66,13 @@ ExternalProject_add(PCRE
   URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
   URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
   CMAKE_GENERATOR
-    ${CMAKE_GENERATOR}
+    "${CMAKE_GENERATOR}"
   CMAKE_CACHE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
     -DCMAKE_INSTALL_PREFIX:PATH=${PCRE_INSTALL_DIR}
     -DCMAKE_INSTALL_LIBDIR:STRING=lib
-    ${MINGW_CC}
-    ${MINGW_CXX}
+    "${MINGW_CC}"
+    "${MINGW_CXX}"
   INSTALL_DIR ${PCRE_INSTALL_DIR}
   )
 list(APPEND _swig_cache_args
