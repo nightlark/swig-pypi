@@ -153,12 +153,13 @@ else()
     endif()
     set(MINGW_CC "CC=${MINGW_BASE_PATH}/bin/gcc.exe")
     set(MINGW_CXX "CXX=${MINGW_BASE_PATH}/bin/g++.exe")
+    set(WIN_SH_CMD "sh.exe")
   endif()
   set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MINGW_CC} ${MINGW_CXX} ${SWIG_SOURCE_DIR}/configure --prefix=
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MINGW_CC} ${MINGW_CXX} ${WIN_SH_CMD} ${SWIG_SOURCE_DIR}/configure --prefix=
     BUILD_COMMAND ${MAKE_EXE} -j
     INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${SWIG_BINARY_DIR}
     DEPENDS
