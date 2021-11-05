@@ -143,7 +143,7 @@ else()
     REQUIRED
   )
   if(WIN32)
-    find(MSYS REQUIRED)
+    find_package(MSYS REQUIRED)
   endif()
   set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
