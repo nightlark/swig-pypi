@@ -21,6 +21,21 @@ set(_swig_build_flags)
 
 if(WIN32)
   set(_swig_build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
+  # SWIG versions before 4.1.0 don't have CMake -- "easiest" to build using MSYS2
+  if(SWIG_VERSION VERSION_LESS 4.1.0)
+    find_package(MSYS REQUIRED)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw64")
+      set(MSYSTEM "MSYSTEM=MINGW64")
+    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw32")
+      set(MSYSTEM "MSYSTEM=MINGW32")
+    endif()
+    set(MINGW_CC "-DCMAKE_C_COMPILER:PATH=${MINGW_BASE_PATH}/bin/gcc.exe")
+    set(MINGW_CXX "-DCMAKE_CXX_COMPILER:PATH=${MINGW_BASE_PATH}/bin/g++.exe")
+    set(WIN_MSYS_HERE "-here")
+    set(CMAKE_GENERATOR "MinGW Makefiles")
+  endif()
 endif()
 
 function(tmp_ExternalProject_add_Empty prj deps)
@@ -50,10 +65,14 @@ ExternalProject_add(PCRE
   BINARY_DIR ${PCRE_BINARY_DIR}
   URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
   URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
+  CMAKE_GENERATOR
+    ${CMAKE_GENERATOR}
   CMAKE_CACHE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
     -DCMAKE_INSTALL_PREFIX:PATH=${PCRE_INSTALL_DIR}
     -DCMAKE_INSTALL_LIBDIR:STRING=lib
+    ${MINGW_CC}
+    ${MINGW_CXX}
   INSTALL_DIR ${PCRE_INSTALL_DIR}
   )
 list(APPEND _swig_cache_args
@@ -143,32 +162,18 @@ else()
     NAMES_PER_DIR
     REQUIRED
   )
-  # Make sure the gcc and g++ compilers in MinGW are used
-  if(WIN32)
-    find_package(MSYS REQUIRED)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw64")
-      set(MSYSTEM "MSYSTEM=MINGW64")
-    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw32")
-      set(MSYSTEM "MSYSTEM=MINGW32")
-    endif()
-    set(MINGW_CC "CC=${MINGW_BASE_PATH}/bin/gcc.exe")
-    set(MINGW_CXX "CXX=${MINGW_BASE_PATH}/bin/g++.exe")
-    set(WIN_MSYS_HERE "-here")
-  endif()
-  set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
+  set(SWIG_INSTALL_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${SWIG_SOURCE_DIR}/configure --prefix=
     BUILD_COMMAND ${MAKE_EXE} -j
-    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${SWIG_BINARY_DIR}
+    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${SWIG_INSTALL_DIR}
     DEPENDS
       PCRE
       BISON-bin
     )
-  install(FILES ${SWIG_BINARY_DIR}/bin/ DESTINATION bin)
-  install(FILES ${SWIG_BINARY_DIR}/share/ DESTINATION share)
+  install(FILES ${SWIG_INSTALL_DIR}/bin/ DESTINATION bin)
+  install(FILES ${SWIG_INSTALL_DIR}/share/ DESTINATION share)
 endif()
 
