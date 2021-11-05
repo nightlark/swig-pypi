@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.21)
 
 project(SwigPythonDistributions NONE)
 
@@ -142,13 +142,16 @@ else()
     NAMES_PER_DIR
     REQUIRED
   )
+  if(WIN32)
+    find(MSYS REQUIRED)
+  endif()
   set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${SWIG_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} CC=gcc CXX=g++
-    INSTALL_COMMAND ${MAKE_EXE} install DESTDIR=${SWIG_BINARY_DIR}
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYS_CMD} ${SWIG_SOURCE_DIR}/configure --prefix=
+    BUILD_COMMAND ${MSYS_CMD} ${MAKE_EXE} CC=gcc CXX=g++
+    INSTALL_COMMAND ${MSYS_CMD} ${MAKE_EXE} install DESTDIR=${SWIG_BINARY_DIR}
     DEPENDS
       PCRE
       BISON-bin
