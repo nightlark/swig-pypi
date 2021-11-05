@@ -62,8 +62,8 @@ set(PCRE_BINARY_DIR ${CMAKE_BINARY_DIR}/PCRE-build)
 set(PCRE_INSTALL_DIR ${CMAKE_BINARY_DIR}/PCRE-install)
 
 # Alternate idea: if building on Windows with swig version less than 4.1.0, have a special case for the PCRE build too
-list(APPEND PCRE_BUILD_CMD "${CMAKE_COMMAND}" "-E" "env" "${MSYSTEM}" "${MSYS_CMD}" "${WIN_MSYS_HERE}" "${CMAKE_COMAND}" "--build=${PCRE_BINARY_DIR}")
-list(APPEND PCRE_INSTALL_CMD "${CMAKE_COMMAND}" "-E" "env" "${MSYSTEM}" "${MSYS_CMD}" "${WIN_MSYS_HERE}" "${CMAKE_COMAND}" "--build=${PCRE_BINARY_DIR}" "--target=${PCRE_INSTALL_DIR}")
+list(APPEND PCRE_BUILD_CMD "${CMAKE_COMAND}" "--build=${PCRE_BINARY_DIR}")
+list(APPEND PCRE_INSTALL_CMD "${CMAKE_COMAND}" "--build=${PCRE_BINARY_DIR}" "--target=${PCRE_INSTALL_DIR}")
 ExternalProject_add(PCRE
   SOURCE_DIR ${PCRE_SOURCE_DIR}
   BINARY_DIR ${PCRE_BINARY_DIR}
