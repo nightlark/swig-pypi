@@ -91,13 +91,11 @@ set(_swig_build_flags "${_swig_build_flags} -DPCRE_STATIC")
 else()
   ExternalProject_add(PCRE
     SOURCE_DIR ${PCRE_SOURCE_DIR}
-    BINARY_DIR ${PCRE_BINARY_DIR}
-    INSTALL_DIR ${PCRE_INSTALL_DIR}
     URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
     URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${PCRE_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} -j
-    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${PCRE_INSTALL_DIR}
+    BUILD_COMMAND ${MAKE_EXE} -j -C ${PCRE_SOURCE_DIR}
+    INSTALL_COMMAND ${MAKE_EXE} -j -C ${PCRE_SOURCE_DIR} install DESTDIR=${PCRE_INSTALL_DIR}
     )
 endif()
 
@@ -181,8 +179,8 @@ else()
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${SWIG_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} -j
-    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${SWIG_INSTALL_DIR}
+    BUILD_COMMAND ${MAKE_EXE} -j -C ${SWIG_SOURCE_DIR}
+    INSTALL_COMMAND ${MAKE_EXE} -j -C ${SWIG_SOURCE_DIR} install DESTDIR=${SWIG_INSTALL_DIR}
     DEPENDS
       PCRE
       BISON-bin
