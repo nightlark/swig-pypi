@@ -42,8 +42,7 @@ if(SWIG_VERSION VERSION_LESS 4.1.0)
     set(MINGW_CC "-DCMAKE_C_COMPILER:PATH=${MINGW_BASE_PATH}/bin/gcc.exe")
     set(MINGW_CXX "-DCMAKE_CXX_COMPILER:PATH=${MINGW_BASE_PATH}/bin/g++.exe")
     set(WIN_MSYS_HERE "-here")
-    set(WIN_MSYS_SHELL "-shell")
-    set(WIN_MSYS_BASH "bash")
+    set(MSYS_SHELL "SHELL=${MSYS_INSTALL_PATH}/usr/bin/sh")
     set(_swig_build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
   endif()
 endif()
@@ -96,7 +95,7 @@ else()
     INSTALL_DIR ${PCRE_INSTALL_DIR}
     URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
     URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${WIN_MSYS_SHELL} ${WIN_MSYS_BASH} <SOURCE_DIR>/configure --prefix=
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_SHELL} ${MSYS_CMD} ${WIN_MSYS_HERE} ${WIN_MSYS_SHELL} ${WIN_MSYS_BASH} <SOURCE_DIR>/configure --prefix=
     BUILD_COMMAND ${MAKE_EXE} -j VERBOSE=1 V=1
     BUILD_IN_SOURCE ON
     INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=<INSTALL_DIR>
@@ -183,7 +182,7 @@ else()
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     INSTALL_DIR ${SWIG_INSTALL_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${WIN_MSYS_SHELL} ${WIN_MSYS_BASH} <SOURCE_DIR>/configure --prefix=
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${MSYS_SHELL} ${WIN_MSYS_HERE} <SOURCE_DIR>/configure --prefix=
     BUILD_COMMAND ${MAKE_EXE} -j VERBOSE=1 V=1
     BUILD_IN_SOURCE ON
     INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=<INSTALL_DIR> VERBOSE=1 V=1
