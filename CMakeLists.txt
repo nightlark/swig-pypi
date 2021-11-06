@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.10)
 
 project(SwigPythonDistributions NONE)
 
@@ -80,7 +80,7 @@ if(NOT WIN_MSYS_BUILD)
     URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
     CMAKE_CACHE_ARGS
       -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
-      -DCMAKE_INSTALL_PREFIX:PATH=${PCRE_INSTALL_DIR}
+      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
       -DCMAKE_INSTALL_LIBDIR:STRING=lib
     )
 list(APPEND _swig_cache_args
@@ -91,11 +91,12 @@ set(_swig_build_flags "${_swig_build_flags} -DPCRE_STATIC")
 else()
   ExternalProject_add(PCRE
     SOURCE_DIR ${PCRE_SOURCE_DIR}
+    INSTALL_DIR ${PCRE_INSTALL_DIR}
     URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
     URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${PCRE_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} -j -C ${PCRE_SOURCE_DIR}
-    INSTALL_COMMAND ${MAKE_EXE} -j -C ${PCRE_SOURCE_DIR} install DESTDIR=${PCRE_INSTALL_DIR}
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} <SOURCE_DIR>/configure --prefix=
+    BUILD_COMMAND ${MAKE_EXE} -j -C <BINARY_DIR>
+    INSTALL_COMMAND ${MAKE_EXE} -j -C <BINARY_DIR> install DESTDIR=<INSTALL_DIR>
     )
 endif()
 
@@ -135,13 +136,13 @@ if(NOT BISON_FOUND)
     # Build from source on platforms that could reasonably already have autotools installed
     ExternalProject_add(BISON-bin
       SOURCE_DIR ${BISON_SOURCE_DIR}
+      INSTALL_DIR ${BISON_INSTALL_DIR}
       URL "https://ftp.gnu.org/gnu/bison/bison-3.7.tar.gz"
       URL_HASH "SHA256=492ad61202de893ca21a99b621d63fa5389da58804ad79d3f226b8d04b803998"
-      CONFIGURE_COMMAND ${BISON_SOURCE_DIR}/configure --prefix=${BISON_INSTALL_DIR}
+      CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=<INSTALL_DIR>
       BUILD_COMMAND make
       BUILD_IN_SOURCE 1
       INSTALL_COMMAND make install
-      INSTALL_DIR ${BISON_INSTALL_DIR}
       )
     list(APPEND _swig_cache_args
       -DBISON_EXECUTABLE:FILEPATH=${BISON_INSTALL_DIR}/bin/bison${CMAKE_EXECUTABLE_SUFFIX}
@@ -155,7 +156,7 @@ endif()
 set(SWIG_SOURCE_DIR ${CMAKE_BINARY_DIR}/SWIG-src)
 set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-build)
 
-if(SWIG_VERSION VERSION_GREATER_EQUAL 4.1.0)
+if(NOT SWIG_VERSION VERSION_LESS 4.1.0)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_SOURCE_DIR}
     BINARY_DIR ${SWIG_BINARY_DIR}
@@ -177,10 +178,11 @@ else()
   set(SWIG_INSTALL_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_SOURCE_DIR}
+    INSTALL_DIR ${SWIG_INSTALL_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${SWIG_SOURCE_DIR}/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} -j -C ${SWIG_SOURCE_DIR}
-    INSTALL_COMMAND ${MAKE_EXE} -j -C ${SWIG_SOURCE_DIR} install DESTDIR=${SWIG_INSTALL_DIR}
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} <SOURCE_DIR>/configure --prefix=
+    BUILD_COMMAND ${MAKE_EXE} -j -C <BINARY_DIR>
+    INSTALL_COMMAND ${MAKE_EXE} -j -C <BINARY_DIR> install DESTDIR=<INSTALL_DIR>
     DEPENDS
       PCRE
       BISON-bin
