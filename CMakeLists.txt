@@ -89,7 +89,7 @@ list(APPEND _swig_cache_args
   )
 set(_swig_build_flags "${_swig_build_flags} -DPCRE_STATIC")
 else()
-  ExternalProject_add(SWIG
+  ExternalProject_add(PCRE
     SOURCE_DIR ${PCRE_SOURCE_DIR}
     BINARY_DIR ${PCRE_BINARY_DIR}
     INSTALL_DIR ${PCRE_INSTALL_DIR}
@@ -97,7 +97,7 @@ else()
     URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
     CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_CMD} ${WIN_MSYS_HERE} ${PCRE_SOURCE_DIR}/configure --prefix=
     BUILD_COMMAND ${MAKE_EXE} -j
-    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${SWIG_INSTALL_DIR}
+    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=${PCRE_INSTALL_DIR}
     )
 endif()
 
