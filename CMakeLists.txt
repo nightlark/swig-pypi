@@ -76,13 +76,13 @@ endif()
 
 # Bison
 find_package(BISON)
-if(NOT BISON_FOUND)
+if(NOT BISON_FOUND AND NOT WIN_USE_PREBUILT)
   set(BISON_SOURCE_DIR ${CMAKE_BINARY_DIR}/BISON-bin-src)
   set(BISON_BINARY_DIR ${CMAKE_BINARY_DIR}/BISON-bin-build)
   set(BISON_INSTALL_DIR ${CMAKE_BINARY_DIR}/BISON-bin-install)
   set(BISON_BINARY_DIST_DIR ${CMAKE_BINARY_DIR}/BISON-bin-dist)
   set(BISON_BINARY_DIST_ARCH_DIR ${CMAKE_BINARY_DIR}/BISON-bin-dist-arch)
-  if(WIN32 AND NOT WIN_USE_PREBUILT)
+  if(WIN32)
     # Easiest to just download a precompiled binary
 #    ExternalProject_add(BISON-bin
 #      SOURCE_DIR ${BISON_SOURCE_DIR}
@@ -168,6 +168,7 @@ if(NOT WIN_USE_PREBUILT)
   endif()
 else(NOT WIN_USE_PREBUILT)
   # building on Windows with MinGW from Makefiles is a pain -- simply get precompiled Windows binaries instead
+  set(SWIG_INSTALL_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
   ExternalProject_add(SWIG
     SOURCE_DIR ${SWIG_INSTALL_DIR}
     URL "https://prdownloads.sourceforge.net/swig/swigwin-${SWIG_VERSION}.zip"
