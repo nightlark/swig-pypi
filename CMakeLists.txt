@@ -163,7 +163,7 @@ if(NOT WIN_USE_PREBUILT)
         PCRE
         BISON-bin
       )
-    install(FILES ${SWIG_INSTALL_DIR}/bin/ DESTINATION bin)
+    install(PROGRAMS ${SWIG_INSTALL_DIR}/bin/ DESTINATION bin)
     install(FILES ${SWIG_INSTALL_DIR}/share/ DESTINATION share)
   endif()
 else(NOT WIN_USE_PREBUILT)
@@ -176,7 +176,7 @@ else(NOT WIN_USE_PREBUILT)
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
     )
-  install(FILES ${SWIG_INSTALL_DIR}/swig.exe DESTINATION bin)
+  install(PROGRAMS ${SWIG_INSTALL_DIR}/swig.exe DESTINATION bin)
   install(FILES ${SWIG_INSTALL_DIR}/Lib/ DESTINATION share/swig/${SWIG_VERSION})
 endif()
 
