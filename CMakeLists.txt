@@ -156,7 +156,7 @@ if(NOT WIN_USE_PREBUILT)
       INSTALL_DIR ${SWIG_INSTALL_DIR}
       URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
       CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${MSYS_SHELL} ${WIN_MSYS_HERE} <SOURCE_DIR>/configure --prefix=
-      BUILD_COMMAND ${MAKE_EXE} -j VERBOSE=1 V=1
+      BUILD_COMMAND make -j
       BUILD_IN_SOURCE ON
       INSTALL_COMMAND make -j install DESTDIR=<INSTALL_DIR>
       DEPENDS
