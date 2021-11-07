@@ -19,31 +19,14 @@ include(swig_version.cmake)
 set(_swig_cache_args)
 set(_swig_build_flags)
 
-# SWIG versions before 4.1.0 don't have CMake -- build using make instead
-if(SWIG_VERSION VERSION_LESS 4.1.0)
-  # Need to find a copy of make; mostly an issue on Windows
-  find_program(MAKE_EXE
-    NAMES gmake mingw32-make mingw64-make make
-    NAMES_PER_DIR
-    REQUIRED
-  )
-
-  # on Windows, "easiest" to build using MSYS2
-  if(WIN32)
-    find_package(MSYS REQUIRED)
-    set(WIN_MSYS_BUILD ON)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw64")
-      set(MSYSTEM "MSYSTEM=MINGW64")
-    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-      set(MINGW_BASE_PATH "${MSYS_INSTALL_PATH}/mingw32")
-      set(MSYSTEM "MSYSTEM=MINGW32")
-    endif()
-    set(MINGW_CC "-DCMAKE_C_COMPILER:PATH=${MINGW_BASE_PATH}/bin/gcc.exe")
-    set(MINGW_CXX "-DCMAKE_CXX_COMPILER:PATH=${MINGW_BASE_PATH}/bin/g++.exe")
-    set(WIN_MSYS_HERE "-here")
-    set(MSYS_SHELL "SHELL=${MSYS_INSTALL_PATH}/usr/bin/sh")
-    set(_swig_build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
+if(WIN32)
+  set(_swig_build_flags "${_swig_build_flags} -static -static-libgcc -static-libstdc++")
+  if (SWIG VERSION_LESS 4.1.0)
+    # Building with Makefiles on Windows using MSYS is a royal pain
+    # Makefiles were trying to run using the git bash copy of sh.exe, but
+    # of course, those failed to run due to a SPACE in the path name
+    # because "Program Files"...
+    set(WIN_USE_PREBUILT ON)
   endif()
 endif()
 
@@ -71,8 +54,8 @@ set(PCRE_SOURCE_DIR ${CMAKE_BINARY_DIR}/PCRE-src)
 set(PCRE_BINARY_DIR ${CMAKE_BINARY_DIR}/PCRE-build)
 set(PCRE_INSTALL_DIR ${CMAKE_BINARY_DIR}/PCRE-install)
 
-# Alternate idea: if building on Windows with swig version less than 4.1.0, have a special case for the PCRE build too
-if(NOT WIN_MSYS_BUILD)
+
+if(NOT WIN_USE_PREBUILT)
   ExternalProject_add(PCRE
     SOURCE_DIR ${PCRE_SOURCE_DIR}
     BINARY_DIR ${PCRE_BINARY_DIR}
@@ -89,17 +72,6 @@ list(APPEND _swig_cache_args
   -DPCRE_INCLUDE_DIR:PATH=${PCRE_INSTALL_DIR}/include
   )
 set(_swig_build_flags "${_swig_build_flags} -DPCRE_STATIC")
-else()
-  ExternalProject_add(PCRE
-    SOURCE_DIR ${PCRE_SOURCE_DIR}
-    INSTALL_DIR ${PCRE_INSTALL_DIR}
-    URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
-    URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env ${MSYSTEM} ${MSYS_SHELL} ${MSYS_CMD} ${WIN_MSYS_HERE} ${WIN_MSYS_SHELL} ${WIN_MSYS_BASH} <SOURCE_DIR>/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} -j VERBOSE=1 V=1
-    BUILD_IN_SOURCE ON
-    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=<INSTALL_DIR>
-    )
 endif()
 
 # Bison
@@ -110,7 +82,7 @@ if(NOT BISON_FOUND)
   set(BISON_INSTALL_DIR ${CMAKE_BINARY_DIR}/BISON-bin-install)
   set(BISON_BINARY_DIST_DIR ${CMAKE_BINARY_DIR}/BISON-bin-dist)
   set(BISON_BINARY_DIST_ARCH_DIR ${CMAKE_BINARY_DIR}/BISON-bin-dist-arch)
-  if(WIN32)
+  if(WIN32 AND NOT WIN_USE_PREBUILT)
     # Easiest to just download a precompiled binary
 #    ExternalProject_add(BISON-bin
 #      SOURCE_DIR ${BISON_SOURCE_DIR}
@@ -158,39 +130,52 @@ endif()
 set(SWIG_SOURCE_DIR ${CMAKE_BINARY_DIR}/SWIG-src)
 set(SWIG_BINARY_DIR ${CMAKE_BINARY_DIR}/SWIG-build)
 
-if(NOT SWIG_VERSION VERSION_LESS 4.1.0)
+if(NOT WIN_USE_PREBUILT)
+  if(NOT SWIG_VERSION VERSION_LESS 4.1.0)
+    ExternalProject_add(SWIG
+      SOURCE_DIR ${SWIG_SOURCE_DIR}
+      BINARY_DIR ${SWIG_BINARY_DIR}
+      URL "https://github.com/swig/swig/archive/refs/tags/v${SWIG_VERSION}.tar.gz"
+      #URL "https://github.com/swig/swig/archive/master.tar.gz"
+      CMAKE_CACHE_ARGS
+        -DBUILD_TESTING:BOOL=OFF
+        -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
+        "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
+        "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
+        ${_swig_cache_args}
+      INSTALL_COMMAND ""
+      DEPENDS
+        PCRE
+        BISON-bin
+      )
+    install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
+  else()
+    set(SWIG_INSTALL_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
+    ExternalProject_add(SWIG
+      SOURCE_DIR ${SWIG_SOURCE_DIR}
+      INSTALL_DIR ${SWIG_INSTALL_DIR}
+      URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
+      CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${MSYS_SHELL} ${WIN_MSYS_HERE} <SOURCE_DIR>/configure --prefix=
+      BUILD_COMMAND ${MAKE_EXE} -j VERBOSE=1 V=1
+      BUILD_IN_SOURCE ON
+      INSTALL_COMMAND make -j install DESTDIR=<INSTALL_DIR>
+      DEPENDS
+        PCRE
+        BISON-bin
+      )
+    install(FILES ${SWIG_INSTALL_DIR}/bin/ DESTINATION bin)
+    install(FILES ${SWIG_INSTALL_DIR}/share/ DESTINATION share)
+  endif()
+else(NOT WIN_USE_PREBUILT)
+  # building on Windows with MinGW from Makefiles is a pain -- simply get precompiled Windows binaries instead
   ExternalProject_add(SWIG
-    SOURCE_DIR ${SWIG_SOURCE_DIR}
-    BINARY_DIR ${SWIG_BINARY_DIR}
-    URL "https://github.com/swig/swig/archive/refs/tags/v${SWIG_VERSION}.tar.gz"
-    #URL "https://github.com/swig/swig/archive/master.tar.gz"
-    CMAKE_CACHE_ARGS
-      -DBUILD_TESTING:BOOL=OFF
-      -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-      "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
-      "-DCMAKE_CXX_FLAGS:STRING=${_swig_build_flags}"
-      ${_swig_cache_args}
+    SOURCE_DIR ${SWIG_INSTALL_DIR}
+    URL "https://prdownloads.sourceforge.net/swig/swigwin-${SWIG_VERSION}.zip"
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
     INSTALL_COMMAND ""
-    DEPENDS
-      PCRE
-      BISON-bin
     )
-  install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
-else()
-  set(SWIG_INSTALL_DIR ${CMAKE_BINARY_DIR}/SWIG-install)
-  ExternalProject_add(SWIG
-    SOURCE_DIR ${SWIG_SOURCE_DIR}
-    INSTALL_DIR ${SWIG_INSTALL_DIR}
-    URL "https://prdownloads.sourceforge.net/swig/swig-${SWIG_VERSION}.tar.gz"
-    CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PCRE_CONFIG=${PCRE_INSTALL_DIR}/bin/pcre-config ${MSYSTEM} ${MSYS_CMD} ${MSYS_SHELL} ${WIN_MSYS_HERE} <SOURCE_DIR>/configure --prefix=
-    BUILD_COMMAND ${MAKE_EXE} -j VERBOSE=1 V=1
-    BUILD_IN_SOURCE ON
-    INSTALL_COMMAND ${MAKE_EXE} -j install DESTDIR=<INSTALL_DIR> VERBOSE=1 V=1
-    DEPENDS
-      PCRE
-      BISON-bin
-    )
-  install(FILES ${SWIG_INSTALL_DIR}/bin/ DESTINATION bin)
-  install(FILES ${SWIG_INSTALL_DIR}/share/ DESTINATION share)
+  install(FILES ${SWIG_INSTALL_DIR}/swig.exe DESTINATION bin)
+  install(FILES ${SWIG_INSTALL_DIR}/Lib/ DESTINATION share/swig/${SWIG_VERSION})
 endif()
 
