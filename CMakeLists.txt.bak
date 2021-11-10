@@ -171,4 +171,3 @@ else()
   install(FILES ${SWIG_BINARY_DIR}/bin/ DESTINATION bin)
   install(FILES ${SWIG_BINARY_DIR}/share/ DESTINATION share)
 endif()
-

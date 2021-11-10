@@ -179,4 +179,3 @@ else(NOT WIN_USE_PREBUILT)
   install(PROGRAMS ${SWIG_INSTALL_DIR}/swig.exe DESTINATION bin)
   install(FILES ${SWIG_INSTALL_DIR}/Lib/ DESTINATION share/swig/${SWIG_VERSION})
 endif()
-
