@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron:  '0 10 * * 1'
-  pull_request_target:
-    branches: [ main ]
+#  pull_request_target:
+#    branches: [ main ]
 jobs:
   update-dep:
     runs-on: ubuntu-latest
