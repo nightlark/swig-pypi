@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "scikit-build"]
+requires = ["setuptools>=45", "wheel", "scikit-build", "setuptools_scm>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
@@ -14,3 +14,6 @@ before-all = [
 [tool.cibuildwheel.linux]
 manylinux-x86_64-image = "manylinux1"
 manylinux-i686-image = "manylinux1"
+
+[tool.setuptools_scm]
+write_to = "src/swig/_version.py"
