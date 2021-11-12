@@ -24,8 +24,7 @@ jobs:
             | grep -Po '\d+(\.\d+)+')
 
           echo "New version: $new_version"
-          echo "::set-output name=ech_new_version::$new_version"
-
+          echo "::set-output name=new_version::$new_version"
 
           if [ "$old_version" != "$new_version" ]; then
             echo "set(SWIG_VERSION $new_version)" > swig_version.cmake
