@@ -1,7 +1,7 @@
 SWIG PyPI
 =========
 
-A SWIG package on PyPI, enabling `pip install swig`. Binary wheels for Windows, macOS and Linux running on x86_64.
+A SWIG package on PyPI, enabling `pip install swig` and use in pyproject.toml files. Binary wheels for Windows, macOS, and Linux for most CPU architectures supported on PyPI.
 
 [SWIG PyPI Homepage](https://github.com/nightlark/swig-pypi)
 
