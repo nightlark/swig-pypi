@@ -62,7 +62,7 @@ jobs:
             build: ""
             use_qemu: false
           - os: macos-10.15
-            arch: "x86_64"
+            arch: "x86_64 universal2 arm64"
             build: ""
             use_qemu: false
 
