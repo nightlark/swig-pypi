@@ -22,7 +22,7 @@ repos:
   hooks:
   - id: black
     args: [--safe, --quiet]
-    exclude: ^(versioneer.py|src/swig/_version.py)
+    exclude: ^(src/swig/_version.py)
 - repo: https://github.com/asottile/blacken-docs
   rev: v1.12.1
   hooks:
@@ -33,4 +33,4 @@ repos:
   hooks:
   - id: flake8
     additional_dependencies: [flake8-bugbear]
-    exclude: ^(versioneer.py|src/swig/_version.py)
+    exclude: ^(src/swig/_version.py)

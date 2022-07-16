@@ -4,7 +4,7 @@ from distutils.text_file import TextFile
 from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 from skbuild import setup
 
-# may be needed in some cases for versioneer to get version correctly during builds
+# may be needed in some cases to get version correctly during builds
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from setuptools_scm import get_version  # noqa: E402
 

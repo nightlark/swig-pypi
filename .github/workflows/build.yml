@@ -70,7 +70,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # just in case versioneer gets used in the future
+          fetch-depth: 0 # ensure history is present for automatic versioning
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2.0.0
@@ -101,7 +101,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # just in case versioneer gets used in the future
+          fetch-depth: 0 # ensure history is present for automatic versioning
 
       - name: Build SDist
         run: pipx run build --sdist
