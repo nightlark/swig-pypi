@@ -3,10 +3,7 @@ import platform
 import subprocess
 import sys
 import glob
-from ._version import get_versions
-
-__version__ = get_versions()["version"]
-del get_versions
+from ._version import __version__, __version_tuple__
 
 DATA = os.path.join(os.path.dirname(__file__), "data")
 
