@@ -27,6 +27,7 @@ cmdclass = {"bdist_wheel": genericpy_bdist_wheel}
 
 setup(
     name="swig",
+    version=get_version(),
     cmdclass=cmdclass,
     package_dir={"": "src"},
     packages=["swig"],
