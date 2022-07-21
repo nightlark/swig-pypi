@@ -3,13 +3,20 @@ SWIG Python Distributions
 
 [![PyPI](https://img.shields.io/pypi/v/swig.svg)](https://pypi.org/project/swig)
 
-A project that packages `swig` as a Python package, enabling `swig` to be installed from PyPI:
+A project that packages SWIG as a Python package, enabling `swig` to be installed from PyPI:
 
-```
+```sh
 pip install swig
 ```
 
-PyPI package versions will follow the `major.minor.patch` version numbers of `swig` releases.
+or used as part of `build-system.requires` in a pyproject.toml file:
+
+```toml
+[build-system]
+requires = ["swig"]
+```
+
+PyPI package versions will follow the `major.minor.patch` version numbers of SWIG releases.
 
 Binary wheels for Windows, macOS, and Linux for most CPU architectures supported on PyPI are provided. ARM wheels for Raspberry Pi available at https://www.piwheels.org/project/swig/.
 
@@ -26,13 +33,13 @@ Installing SWIG
 
 SWIG can be installed by pip with:
 
-```
+```sh
 pip install swig
 ```
 
 or:
 
-```
+```sh
 python -m pip install swig
 ```
 
@@ -41,7 +48,17 @@ Building from the source dist package requires internet access in order to downl
 Using with pipx
 ===============
 
-Using `pipx run swig <args>` will run swig without any install step, as long as the machine has pipx installed (which includes GitHub Actions runners).
+Using `pipx run swig <args>` will run SWIG without any install step, as long as the machine has pipx installed (which includes GitHub Actions runners).
+
+Using with pyproject.toml
+=========================
+
+SWIG can be added to the `build-system.requires` key in a pyproject.toml file for building Python extensions that use SWIG to generate bindings.
+
+```toml
+[build-system]
+requires = ["swig"]
+```
 
 License
 =======
