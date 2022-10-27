@@ -10,6 +10,11 @@ before-all = [
     "pipx install -f ninja==1.10.2.2",
     "ninja --version",
 ]
+test-command = [
+  "swig -version",
+  "swig -pcreversion",
+  "swig -help",
+]
 
 [tool.cibuildwheel.linux]
 manylinux-x86_64-image = "manylinux1"
