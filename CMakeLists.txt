@@ -49,29 +49,50 @@ function(tmp_ExternalProject_add_Empty prj deps)
     )
 endfunction()
 
+# PCRE2
+set(PCRE2_SOURCE_DIR ${CMAKE_BINARY_DIR}/PCRE2-src)
+set(PCRE2_BINARY_DIR ${CMAKE_BINARY_DIR}/PCRE2-build)
+set(PCRE2_INSTALL_DIR ${CMAKE_BINARY_DIR}/PCRE2-install)
+
 # PCRE
 set(PCRE_SOURCE_DIR ${CMAKE_BINARY_DIR}/PCRE-src)
 set(PCRE_BINARY_DIR ${CMAKE_BINARY_DIR}/PCRE-build)
 set(PCRE_INSTALL_DIR ${CMAKE_BINARY_DIR}/PCRE-install)
 
-
 if(NOT WIN_USE_PREBUILT)
-  ExternalProject_add(PCRE
-    SOURCE_DIR ${PCRE_SOURCE_DIR}
-    BINARY_DIR ${PCRE_BINARY_DIR}
-    INSTALL_DIR ${PCRE_INSTALL_DIR}
-    URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
-    URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
-    CMAKE_CACHE_ARGS
-      -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
-      -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-      -DCMAKE_INSTALL_LIBDIR:STRING=lib
-    )
-list(APPEND _swig_cache_args
-  -DPCRE_LIBRARY:FILEPATH=${PCRE_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}pcre${CMAKE_STATIC_LIBRARY_SUFFIX}
-  -DPCRE_INCLUDE_DIR:PATH=${PCRE_INSTALL_DIR}/include
-  )
-set(_swig_build_flags "${_swig_build_flags} -DPCRE_STATIC")
+  if(NOT SWIG_VERSION VERSION_LESS 4.1.0)
+    ExternalProject_add(PCRE2
+      SOURCE_DIR ${PCRE2_SOURCE_DIR}
+      BINARY_DIR ${PCRE2_BINARY_DIR}
+      INSTALL_DIR ${PCRE2_INSTALL_DIR}
+      URL "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.zip"
+      URL_HASH "SHA256=b6ee01732f0e41296e60a00ce37fbed1c4955ae7e7625b1fd29a55605c9493b4"
+      CMAKE_CACHE_ARGS
+        -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
+        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        -DCMAKE_INSTALL_LIBDIR:STRING=lib
+      )
+    list(APPEND _swig_cache_args
+        -DPCRE2_LIBRARY:FILEPATH=${PCRE2_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}pcre2-8${CMAKE_STATIC_LIBRARY_SUFFIX}
+        -DPCRE2_INCLUDE_DIR:PATH=${PCRE2_INSTALL_DIR}/include
+      )
+  else()
+    ExternalProject_add(PCRE
+      SOURCE_DIR ${PCRE_SOURCE_DIR}
+      BINARY_DIR ${PCRE_BINARY_DIR}
+      INSTALL_DIR ${PCRE_INSTALL_DIR}
+      URL "https://prdownloads.sourceforge.net/pcre/pcre-8.45.tar.gz"
+      URL_HASH "SHA256=4e6ce03e0336e8b4a3d6c2b70b1c5e18590a5673a98186da90d4f33c23defc09"
+      CMAKE_CACHE_ARGS
+        -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
+        -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+        -DCMAKE_INSTALL_LIBDIR:STRING=lib
+      )
+    list(APPEND _swig_cache_args
+        -DPCRE_LIBRARY:FILEPATH=${PCRE_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}pcre${CMAKE_STATIC_LIBRARY_SUFFIX}
+        -DPCRE_INCLUDE_DIR:PATH=${PCRE_INSTALL_DIR}/include
+      )
+  endif()
 endif()
 
 # Bison
@@ -145,7 +166,7 @@ if(NOT WIN_USE_PREBUILT)
         ${_swig_cache_args}
       INSTALL_COMMAND ""
       DEPENDS
-        PCRE
+        PCRE2
         BISON-bin
       )
     install(SCRIPT ${SWIG_BINARY_DIR}/cmake_install.cmake)
