@@ -15,7 +15,7 @@ jobs:
         run: |
           old_version="$(grep -Po '(?<=SWIG_VERSION )\d+(\.\d+)+' swig_version.cmake)"
           echo "Old version: $old_version"
-          echo "::set-output name=old_version::$old_version"
+          echo "old_version=$old_version" >> $GITHUB_OUTPUT
 
           new_version=$(git -c 'versionsort.suffix=-' \
             ls-remote --exit-code --refs --sort='version:refname' --tags https://github.com/swig/swig/ 'v*.*.*'\
@@ -24,7 +24,7 @@ jobs:
             | grep -Po '\d+(\.\d+)+')
 
           echo "New version: $new_version"
-          echo "::set-output name=new_version::$new_version"
+          echo "new_version=$new_version" >> $GITHUB_OUTPUT
 
           if [ "$old_version" != "$new_version" ]; then
             echo "set(SWIG_VERSION $new_version)" > swig_version.cmake
