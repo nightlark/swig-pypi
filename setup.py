@@ -4,6 +4,7 @@ from distutils.text_file import TextFile
 from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 from skbuild import setup
 
+
 class genericpy_bdist_wheel(_bdist_wheel):
     def finalize_options(self):
         _bdist_wheel.finalize_options(self)

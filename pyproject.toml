@@ -40,6 +40,6 @@ dynamic = ["version"]
 
 [project.scripts]
 swig = "swig:swig"
- 
+
 [tool.setuptools_scm]
 write_to = "src/swig/_version.py"
