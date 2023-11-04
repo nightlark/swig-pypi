@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "scikit-build", "setuptools_scm>=6.2"]
+requires = ["setuptools>=64", "wheel", "scikit-build", "setuptools_scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
@@ -20,5 +20,26 @@ test-command = [
 manylinux-x86_64-image = "manylinux1"
 manylinux-i686-image = "manylinux1"
 
+[project]
+name = "swig"
+description = "SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
+keywords = ["swig", "build", "c", "c++"]
+readme = "README.md"
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "License :: Other/Proprietary License",
+  "Programming Language :: C",
+  "Programming Language :: C++",
+  "Programming Language :: Python",
+  "Operating System :: OS Independent",
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+]
+dynamic = ["version"]
+
+[project.scripts]
+swig = "swig:swig"
+ 
 [tool.setuptools_scm]
 write_to = "src/swig/_version.py"
