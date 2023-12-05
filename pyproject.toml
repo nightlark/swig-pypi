@@ -24,6 +24,7 @@ manylinux-i686-image = "manylinux1"
 name = "swig"
 description = "SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 keywords = ["swig", "build", "c", "c++"]
+license = {text = "https://github.com/swig/swig/blob/master/LICENSE"}
 readme = "README.md"
 classifiers = [
   "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
@@ -40,6 +41,21 @@ dynamic = ["version"]
 
 [project.scripts]
 swig = "swig:swig"
+
+[project.urls]
+Homepage = "https://swig.org/"
+Download = "https://swig.org/download.html"
+"Source Code" = "https://github.com/nightlark/swig-pypi"
+"Bug Tracker" = "https://github.com/nightlark/swig-pypi/issues"
+
+# Should be possible to specify these fields too, except then "shared" data files end up in the wrong subfolder
+# Eventually should try migrating to scikit-build-core and ditching setuptools entirely
+#[tool.setuptools]
+#packages = ["swig"]
+#package-dir = {"" = "src"}
+#
+#[tool.setuptools.package-data]
+#swig = ["data/*"] 
 
 [tool.setuptools_scm]
 write_to = "src/swig/_version.py"
