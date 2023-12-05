@@ -20,14 +20,7 @@ cmdclass = {"bdist_wheel": genericpy_bdist_wheel}
 
 setup(
     cmdclass=cmdclass,
-    package_dir={"": "src"},
-    packages=["swig"],
     cmake_install_dir="src/swig/data",
-    url="http://www.swig.org/",
-    download_url="http://www.swig.org/download.html",
-    project_urls={
-        "Source Code": "https://github.com/nightlark/swig-pypi",
-        "Bug Tracker": "https://github.com/nightlark/swig-pypi/issues",
-    },
-    license="https://github.com/swig/swig/blob/master/LICENSE",
+    packages=["swig"],
+    package_dir={"": "src"},
 )
