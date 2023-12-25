@@ -93,6 +93,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
+          name: artifact-${{matrix.os}}-${{matrix.build}}${{matrix.arch}}${{matrix.mingw_env}}
           path: ./wheelhouse/*.whl
 
   build_sdist:
@@ -108,6 +109,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
+          name: artifact-sdist
           path: dist/*.tar.gz
 
   check_dist:
@@ -136,7 +138,6 @@ jobs:
     - name: Download Python package dist artifacts
       uses: actions/download-artifact@v4
       with:
-        name: artifact
         path: dist
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
