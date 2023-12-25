@@ -20,50 +20,61 @@ jobs:
           - os: ubuntu-20.04
             arch: "x86_64"
             build: ""
+            artifact_suffix: "linux_x86_64"
             use_qemu: false
           - os: ubuntu-20.04
             arch: "i686"
             build: ""
+            artifact_suffix: "linux_i686"
             use_qemu: false
           - os: ubuntu-20.04
             arch: "aarch64"
             build: "manylinux_"
+            artifact_suffix: "manylinux_aarch64"
             use_qemu: true
           - os: ubuntu-20.04
             arch: "aarch64"
             build: "musllinux_"
+            artifact_suffix: "musllinux_aarch64"
             use_qemu: true
           - os: ubuntu-20.04
             arch: "ppc64le"
             build: "manylinux_"
+            artifact_suffix: "manylinux_ppc64le"
             use_qemu: true
           - os: ubuntu-20.04
             arch: "ppc64le"
             build: "musllinux_"
+            artifact_suffix: "musllinux_ppc64le"
             use_qemu: true
           - os: ubuntu-20.04
             arch: "s390x"
             build: "manylinux_"
+            artifact_suffix: "manylinux_s390x"
             use_qemu: true
           - os: ubuntu-20.04
             arch: "s390x"
             build: "musllinux_"
+            artifact_suffix: "musllinux_s390x"
             use_qemu: true
           - os: windows-2019
             arch: "AMD64"
             msystem: "mingw64"
             mingw_env: "x86_64"
             build: ""
+            artifact_suffix: "windows_x86_64"
             use_qemu: false
           - os: windows-2019
             arch: "x86"
             msystem: "mingw32"
             mingw_env: "i686"
             build: ""
+            artifact_suffix: "windows_x86"
             use_qemu: false
           - os: macos-11
             arch: "x86_64 universal2 arm64"
             build: ""
+            artifact_suffix: "macos"
             use_qemu: false
 
 
@@ -93,7 +104,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: artifact-${{matrix.os}}-${{matrix.build}}${{matrix.arch}}${{matrix.mingw_env}}
+          name: artifact-${{matrix.artifact_suffix}}
           path: ./wheelhouse/*.whl
 
   build_sdist:
