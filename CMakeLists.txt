@@ -99,7 +99,7 @@ if(NOT WIN_USE_PREBUILT)
 endif()
 
 # Bison
-find_package(BISON)
+find_package(BISON 3.5)
 if(NOT BISON_FOUND AND NOT WIN_USE_PREBUILT)
   set(BISON_SOURCE_DIR ${CMAKE_BINARY_DIR}/BISON-bin-src)
   set(BISON_BINARY_DIR ${CMAKE_BINARY_DIR}/BISON-bin-build)
