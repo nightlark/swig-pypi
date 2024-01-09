@@ -33,7 +33,7 @@ jobs:
           echo "New version: $new_version"
           echo "new_version=$new_version" >> $GITHUB_OUTPUT
 
-          if [ "$old_version" != "$new_version" ] && [ "$new_version" = "$new_version_raw" ]; then
+          if [ "$old_version" != "$new_version" ] && [ "v$new_version" = "$new_version_raw" ]; then
             echo "set(SWIG_VERSION $new_version)" > swig_version.cmake
             echo "swig version updated"
           else
