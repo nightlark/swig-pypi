@@ -163,6 +163,7 @@ if(NOT WIN_USE_PREBUILT)
       #URL "https://github.com/swig/swig/archive/master.tar.gz"
       CMAKE_CACHE_ARGS
         -DBUILD_TESTING:BOOL=OFF
+        -DCMAKE_CXX_STANDARD_REQUIRED:BOOL=ON
         -DCMAKE_CXX_STANDARD:STRING=11
         -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
         "-DCMAKE_C_FLAGS:STRING=${_swig_build_flags}"
