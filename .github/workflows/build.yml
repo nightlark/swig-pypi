@@ -94,6 +94,10 @@ jobs:
             mingw-w64-${{matrix.mingw_env}}-toolchain
         if: runner.os == 'Windows'
 
+      - name: Install ninja (macOS)
+        run: which ninja || brew install ninja
+        if: runner.os == 'macOS'
+
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.16.5
         env:
