@@ -135,8 +135,8 @@ if(NOT BISON_FOUND AND NOT WIN_USE_PREBUILT)
     ExternalProject_add(BISON-bin
       SOURCE_DIR ${BISON_SOURCE_DIR}
       INSTALL_DIR ${BISON_INSTALL_DIR}
-      URL "https://ftp.gnu.org/gnu/bison/bison-3.7.tar.gz"
-      URL_HASH "SHA256=492ad61202de893ca21a99b621d63fa5389da58804ad79d3f226b8d04b803998"
+      URL "https://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.gz"
+      URL_HASH "SHA256=06c9e13bdf7eb24d4ceb6b59205a4f67c2c7e7213119644430fe82fbd14a0abb"
       CONFIGURE_COMMAND <SOURCE_DIR>/configure --prefix=<INSTALL_DIR>
       BUILD_COMMAND make
       BUILD_IN_SOURCE 1
