@@ -71,12 +71,11 @@ jobs:
             build: ""
             artifact_suffix: "windows_x86"
             use_qemu: false
-          - os: macos-11
-            arch: "x86_64 universal2 arm64"
+          - os: macos-14
+            arch: "arm64 universal2 x86_64"
             build: ""
             artifact_suffix: "macos"
             use_qemu: false
-
 
     steps:
       - uses: actions/checkout@v4
