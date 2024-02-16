@@ -41,6 +41,7 @@ dynamic = ["version"]
 
 [project.scripts]
 swig = "swig:swig"
+"swig4.0" = "swig:swig"
 
 [project.urls]
 Homepage = "https://swig.org/"
