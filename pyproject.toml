@@ -1,24 +1,6 @@
 [build-system]
-requires = ["setuptools>=64", "wheel", "scikit-build", "setuptools_scm>=8"]
-build-backend = "setuptools.build_meta"
-
-[tool.cibuildwheel]
-build = "cp39-*"
-before-all = [
-    "pipx install -f cmake==3.21.4",
-    "cmake --version",
-    "pipx install -f ninja==1.10.2.2",
-    "ninja --version",
-]
-test-command = [
-  "swig -version",
-  "swig -pcreversion",
-  "swig -help",
-]
-
-[tool.cibuildwheel.linux]
-manylinux-x86_64-image = "manylinux1"
-manylinux-i686-image = "manylinux1"
+requires = ["scikit-build-core"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "swig"
@@ -39,6 +21,26 @@ classifiers = [
 ]
 dynamic = ["version"]
 
+
+[tool.scikit-build]
+wheel.py-api = "py2.py3"
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+sdist.include = ["src/swig/_version.py"]
+wheel.install-dir = "swig/data"
+
+[tool.cibuildwheel]
+build = "cp39-*"
+test-command = [
+  "swig -version",
+  "swig -pcreversion",
+  "swig -help",
+]
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux1"
+manylinux-i686-image = "manylinux1"
+
+
 [project.scripts]
 swig = "swig:swig"
 "swig4.0" = "swig:swig"
@@ -48,15 +50,6 @@ Homepage = "https://swig.org/"
 Download = "https://swig.org/download.html"
 "Source Code" = "https://github.com/nightlark/swig-pypi"
 "Bug Tracker" = "https://github.com/nightlark/swig-pypi/issues"
-
-# Should be possible to specify these fields too, except then "shared" data files end up in the wrong subfolder
-# Eventually should try migrating to scikit-build-core and ditching setuptools entirely
-#[tool.setuptools]
-#packages = ["swig"]
-#package-dir = {"" = "src"}
-#
-#[tool.setuptools.package-data]
-#swig = ["data/*"]
 
 [tool.setuptools_scm]
 write_to = "src/swig/_version.py"
