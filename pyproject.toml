@@ -36,7 +36,7 @@ test-command = [
   "swig -pcreversion",
   "swig -help",
 ]
-environment.PIP_ONLY_BINARY = ":all"
+environment.PIP_ONLY_BINARY = ":all:"
 
 [tool.cibuildwheel.linux]
 manylinux-x86_64-image = "manylinux1"
