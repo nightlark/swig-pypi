@@ -72,7 +72,7 @@ jobs:
             artifact_suffix: "windows_x86"
             use_qemu: false
           - os: macos-14
-            arch: "universal24"
+            arch: "universal"
             build: ""
             artifact_suffix: "macos"
             use_qemu: false
