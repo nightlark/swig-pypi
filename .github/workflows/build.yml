@@ -98,8 +98,11 @@ jobs:
         run: which ninja || brew install ninja
         if: runner.os == 'macOS'
 
+      - name: Install pipx (macOS)
+        run: which pipx || brew install pipx
+        if: runner.os == 'macOS'
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.16.5
+        uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
           CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
