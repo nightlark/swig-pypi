@@ -72,7 +72,7 @@ jobs:
             artifact_suffix: "windows_x86"
             use_qemu: false
           - os: macos-14
-            arch: "arm64 universal2 x86_64"
+            arch: "universal2"
             build: ""
             artifact_suffix: "macos"
             use_qemu: false
@@ -105,7 +105,6 @@ jobs:
         uses: pypa/cibuildwheel@v2.18.1
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
-          CIBW_ARCHS_MACOS: "x86_64 universal2 arm64"
           CIBW_BUILD: "cp39-${{ matrix.build }}*"
 
       - uses: actions/upload-artifact@v4
