@@ -38,6 +38,11 @@ jobs:
             artifact_suffix: "musllinux_aarch64"
             use_qemu: true
           - os: ubuntu-20.04
+            arch: "armv7l"
+            build: "musllinux_"
+            artifact_suffix: "musllinux_armv7l"
+            use_qemu: true
+          - os: ubuntu-20.04
             arch: "ppc64le"
             build: "manylinux_"
             artifact_suffix: "manylinux_ppc64le"
