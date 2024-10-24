@@ -69,13 +69,6 @@ jobs:
             build: ""
             artifact_suffix: "windows_x86_64"
             use_qemu: false
-          - os: windows-2019
-            arch: "x86"
-            msystem: "mingw32"
-            mingw_env: "i686"
-            build: ""
-            artifact_suffix: "windows_x86"
-            use_qemu: false
           - os: macos-14
             arch: "universal2"
             build: ""
