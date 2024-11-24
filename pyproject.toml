@@ -54,4 +54,4 @@ Download = "https://swig.org/download.html"
 "Bug Tracker" = "https://github.com/nightlark/swig-pypi/issues"
 
 [tool.setuptools_scm]
-write_to = "src/swig/_version.py"
+version_file = "src/swig/_version.py"
