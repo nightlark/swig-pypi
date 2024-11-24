@@ -44,7 +44,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: Update swig dependencies
+            commit-message: Update swig to version ${{ steps.check-swig.outputs.new_version }}
             title: Update SWIG version (${{ steps.check-swig.outputs.new_version }})
             body: |
               - Update SWIG version to ${{ steps.check-swig.outputs.new_version }}
