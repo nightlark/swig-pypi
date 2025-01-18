@@ -19,34 +19,26 @@ jobs:
         include:
           - os: ubuntu-20.04
             arch: "x86_64"
-            build: ""
             artifact_suffix: "linux_x86_64"
-            use_qemu: false
           - os: ubuntu-20.04
             arch: "i686"
-            build: ""
             artifact_suffix: "linux_i686"
-            use_qemu: false
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04-arm
             arch: "aarch64"
             build: "manylinux_"
             artifact_suffix: "manylinux_aarch64"
-            use_qemu: true
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04-arm
             arch: "aarch64"
             build: "musllinux_"
             artifact_suffix: "musllinux_aarch64"
-            use_qemu: true
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04-arm
             arch: "armv7l"
             build: "manylinux_"
             artifact_suffix: "manylinux_armv7l"
-            use_qemu: true
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04-arm
             arch: "armv7l"
             build: "musllinux_"
             artifact_suffix: "musllinux_armv7l"
-            use_qemu: true
           - os: ubuntu-20.04
             arch: "ppc64le"
             build: "manylinux_"
@@ -71,14 +63,10 @@ jobs:
             arch: "AMD64"
             msystem: "mingw64"
             mingw_env: "x86_64"
-            build: ""
             artifact_suffix: "windows_x86_64"
-            use_qemu: false
           - os: macos-14
             arch: "universal2"
-            build: ""
             artifact_suffix: "macos"
-            use_qemu: false
 
     steps:
       - uses: actions/checkout@v4
@@ -108,7 +96,7 @@ jobs:
         uses: pypa/cibuildwheel@v2.22.0
         env:
           CIBW_ARCHS: "${{ matrix.arch }}"
-          CIBW_BUILD: "cp39-${{ matrix.build }}*"
+          CIBW_BUILD: "cp39-${{ matrix.build || '' }}*"
 
       - uses: actions/upload-artifact@v4
         with:
