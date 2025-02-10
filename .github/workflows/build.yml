@@ -74,7 +74,7 @@ jobs:
           fetch-depth: 0 # ensure history is present for automatic versioning
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.3.0
+        uses: docker/setup-qemu-action@v3.4.0
         if: runner.os == 'Linux' && matrix.use_qemu
 
       - name: Set up MSYS
