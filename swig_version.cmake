@@ -1,1 +1,1 @@
-set(SWIG_VERSION 4.3.0)
+set(SWIG_VERSION 4.3.1)
