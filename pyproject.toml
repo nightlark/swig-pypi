@@ -39,8 +39,8 @@ test-command = [
 environment.PIP_ONLY_BINARY = ":all:"
 
 [tool.cibuildwheel.linux]
-manylinux-x86_64-image = "manylinux1"
-manylinux-i686-image = "manylinux1"
+manylinux-x86_64-image = "manylinux2014"
+manylinux-i686-image = "manylinux2014"
 
 
 [project.scripts]
