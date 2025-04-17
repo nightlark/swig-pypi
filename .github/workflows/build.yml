@@ -17,10 +17,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "x86_64"
             artifact_suffix: "linux_x86_64"
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "i686"
             artifact_suffix: "linux_i686"
           - os: ubuntu-24.04-arm
@@ -39,22 +39,22 @@ jobs:
             arch: "armv7l"
             build: "musllinux_"
             artifact_suffix: "musllinux_armv7l"
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "ppc64le"
             build: "manylinux_"
             artifact_suffix: "manylinux_ppc64le"
             use_qemu: true
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "ppc64le"
             build: "musllinux_"
             artifact_suffix: "musllinux_ppc64le"
             use_qemu: true
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "s390x"
             build: "manylinux_"
             artifact_suffix: "manylinux_s390x"
             use_qemu: true
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "s390x"
             build: "musllinux_"
             artifact_suffix: "musllinux_s390x"
@@ -105,7 +105,7 @@ jobs:
 
   build_sdist:
     name: Build source distributions
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -122,7 +122,7 @@ jobs:
   check_dist:
     name: Check dist
     needs: [build_wheels, build_sdist]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
         with:
