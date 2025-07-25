@@ -59,7 +59,7 @@ jobs:
             build: "musllinux_"
             artifact_suffix: "musllinux_s390x"
             use_qemu: true
-          - os: windows-2019
+          - os: windows-2022
             arch: "AMD64"
             msystem: "mingw64"
             mingw_env: "x86_64"
