@@ -59,6 +59,16 @@ jobs:
             build: "musllinux_"
             artifact_suffix: "musllinux_s390x"
             use_qemu: true
+          - os: ubuntu-latest
+            arch: "riscv64"
+            build: "manylinux_"
+            artifact_suffix: "manylinux_riscv64"
+            use_qemu: true
+          - os: ubuntu-latest
+            arch: "riscv64"
+            build: "musllinux_"
+            artifact_suffix: "musllinux_riscv64"
+            use_qemu: true
           - os: windows-2022
             arch: "AMD64"
             msystem: "mingw64"
