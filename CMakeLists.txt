@@ -65,8 +65,8 @@ if(NOT WIN_USE_PREBUILT)
       SOURCE_DIR ${PCRE2_SOURCE_DIR}
       BINARY_DIR ${PCRE2_BINARY_DIR}
       INSTALL_DIR ${PCRE2_INSTALL_DIR}
-      URL "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.zip"
-      URL_HASH "SHA256=b6ee01732f0e41296e60a00ce37fbed1c4955ae7e7625b1fd29a55605c9493b4"
+      URL "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.45/pcre2-10.45.zip"
+      URL_HASH "SHA256=59c8556fd45e68599897cd5d74efad9c4a43f85e981fe7ac3ac5fd7aa70672ac"
       CMAKE_CACHE_ARGS
         -DCMAKE_BUILD_TYPE:STRING=${default_build_type}
         -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
