@@ -32,7 +32,6 @@ wheel.install-dir = "swig/data"
 [tool.cibuildwheel]
 archs = ["auto64", "auto32"]
 build = "cp39-*"
-enable = ["cpython-experimental-riscv64"]
 test-command = [
   "swig -version",
   "swig -pcreversion",
