@@ -59,11 +59,14 @@ jobs:
             build: "musllinux_"
             artifact_suffix: "musllinux_s390x"
             use_qemu: true
-          - os: windows-2019
+          - os: windows-latest
             arch: "AMD64"
             msystem: "mingw64"
             mingw_env: "x86_64"
             artifact_suffix: "windows_x86_64"
+          - os: windows-11-arm
+            arch: "ARM64"
+            artifact_suffix: "windows_arm64"
           - os: macos-14
             arch: "universal2"
             artifact_suffix: "macos"
@@ -83,7 +86,7 @@ jobs:
           msystem: ${{ matrix.msystem }}
           install: >-
             mingw-w64-${{matrix.mingw_env}}-toolchain
-        if: runner.os == 'Windows'
+        if: matrix.os == == 'windows-latest'
 
       - name: Install ninja (macOS)
         run: which ninja || brew install ninja
