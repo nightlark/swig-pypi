@@ -82,7 +82,7 @@ jobs:
             artifact_suffix: "macos"
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # ensure history is present for automatic versioning
 
@@ -120,7 +120,7 @@ jobs:
     name: Build source distributions
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # ensure history is present for automatic versioning
 
