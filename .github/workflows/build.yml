@@ -111,7 +111,7 @@ jobs:
           CIBW_ARCHS: "${{ matrix.arch }}"
           CIBW_BUILD: "cp39-${{ matrix.build || '' }}*"
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: artifact-${{matrix.artifact_suffix}}
           path: ./wheelhouse/*.whl
@@ -127,7 +127,7 @@ jobs:
       - name: Build SDist
         run: pipx run build --sdist
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         with:
           name: artifact-sdist
           path: dist/*.tar.gz
