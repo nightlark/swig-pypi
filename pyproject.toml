@@ -6,11 +6,9 @@ build-backend = "scikit_build_core.build"
 name = "swig"
 description = "SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 keywords = ["swig", "build", "c", "c++"]
-license = {text = "https://github.com/swig/swig/blob/master/LICENSE"}
+license = "GPL-3.0-or-later"
 readme = "README.md"
 classifiers = [
-  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-  "License :: Other/Proprietary License",
   "Programming Language :: C",
   "Programming Language :: C++",
   "Programming Language :: Python",
